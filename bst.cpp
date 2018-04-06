@@ -133,14 +133,38 @@ bool are_equal (Bst bst1, Bst bst2){
   if(bst1 == bst2){
     return true;
   }
+  if(bst1 != 0 && bst2 != 0){
+    int array1[69];
+    int len1 = traverse_pre_order(bst1, array1, 0);
+    int array2[69];
+    int len2 = traverse_pre_order(bst2, array2, 0);
+    bool check = false;
+    if(len1 == len2){
+      check = true;
+      for (int i = 0; i < len1; i++) {
+        if(array1[i] != array2[i]){
+          check = false;
+        }
+      }
+    }
+
+    return check;
+  }
   return false;
 }
 
 void most_left_longest_branch (Bst bst, Bst *branch){
-  if(bst == 0) return 0;
-  add(branch)
+  if(bst == 0) return;
+  add(branch, bst->data);
+  if(get_depth(bst->l_subtree) >= get_depth(bst->r_subtree)){
+    most_left_longest_branch(bst->l_subtree, branch);
+  }
+  else{
+    most_left_longest_branch(bst->r_subtree, branch);
+  }
 }
 
 int	get_number_of_subtrees (Bst bst){
-  return 0;
+  if(bst == 0) return -1;
+  return get_number_of_subtrees(bst->l_subtree) + 1 + get_number_of_subtrees(bst->r_subtree) + 1;
 }
